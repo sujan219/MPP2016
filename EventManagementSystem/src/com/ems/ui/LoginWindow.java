@@ -4,6 +4,8 @@ import com.ems.baseclasses.UserLogin;
 import com.ems.data.dao.UserLoginDao;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,22 +30,30 @@ public class LoginWindow extends Application {
 		
 		TextField userName = (TextField)root.lookup("#txtUsername");
 		PasswordField password = (PasswordField)root.lookup("#txtPassword");
-		Button btnLogin = new Button();
 		Label message = (Label)root.lookup("#lblMessage");
-		if(userName.getText().equals("")) {
-			message.setText("Please enter a valid Username");
-			return;
-		}
-		if(password.getText().equals("")) {
-			message.setText("Password cannot be empty");
-			return;
-		}
-		UserLogin user = new UserLogin(userName.getText(), password.getText());
-		UserLoginDao loginDao = new UserLoginDao(user);
-		System.out.println(loginDao.authUser());
-		if(loginDao.authUser())	{
-			new MainWindow(stage);
-			stage.hide();
-		}
+		Button btnLogin = (Button)root.lookup("#btnLogin");
+		btnLogin.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent event) {
+				if(userName.getText().equals("")) {
+					message.setText("Please enter a valid Username");
+					return;
+				}
+				if(password.getText().equals("")) {
+					message.setText("Password cannot be empty");
+					return;
+				}
+				UserLogin user = new UserLogin(userName.getText(), password.getText());
+				UserLoginDao loginDao = new UserLoginDao(user);
+				System.out.println(loginDao.authUser());
+				if(loginDao.authUser())	{
+					new MainWindow(stage);
+					stage.hide();
+				}
+				else {
+					message.setText("Username or Password mismatch");
+				}
+			}
+		});
 	}
 }
