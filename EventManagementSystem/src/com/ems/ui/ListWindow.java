@@ -8,19 +8,29 @@ import com.ems.data.dao.DataReadException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
-public abstract class ListWindow extends Stage {
+public abstract class ListWindow extends ModalDialog implements EventHandler<ActionEvent> {
 	
-	private AddActionWindow addActionWindow;
 	private TableView tableView;
+	
+	private ContextMenu ctxMenu;
+	private MenuItem addMenuItem;
+	private MenuItem editMenuItem;
+	private MenuItem deleteMenuItem;
 	
 	public ListWindow(String title){
 		setTitle(title);
@@ -32,7 +42,7 @@ public abstract class ListWindow extends Stage {
 			tableView = (TableView) root.lookup("#tableView");
 			initTable();
 			loadDataIntoTable();
-			
+			loadContextMenu();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -64,14 +74,45 @@ public abstract class ListWindow extends Stage {
 		}
 	}
 	
-	public void addAction(){
-		//use addActionWindow
+	private void loadContextMenu(){
+		addMenuItem = new MenuItem("Add new record");
+		editMenuItem = new MenuItem("Edit record");
+		deleteMenuItem = new MenuItem("Delete record");
+		
+		ctxMenu = new ContextMenu(addMenuItem, editMenuItem, deleteMenuItem);
+		tableView.setContextMenu(ctxMenu);
+		
+		addMenuItem.setOnAction(this);
+		editMenuItem.setOnAction(this);
+		deleteMenuItem.setOnAction(this);
 	}
 	
-	public void editAction(){
+	@Override
+	public void handle(ActionEvent event) {
+		if(event.getSource() == addMenuItem){
+			addAction();
+		}else if(event.getSource() == editMenuItem){
+			editAction();
+		}else if(event.getSource() == deleteMenuItem){
+			deleteAction();
+		}
+	}
+	
+	private void addAction(){
+		AddActionWindow addActionWindow = getAddActionWindow();
+		addActionWindow.show();
+	}
+	
+	private void editAction(){
+		
+	}
+	
+	private void deleteAction(){
 		
 	}
 	
 	protected abstract List<String> getColumns();
 	protected abstract ObservableList<ObservableList<String>> getTableContent() throws DataReadException;
+	
+	protected abstract AddActionWindow getAddActionWindow();
 }

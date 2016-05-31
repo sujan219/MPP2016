@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import com.ems.data.dao.DataReadException;
 import com.ems.data.dao.PersonnelDao;
+import com.ems.ui.AddActionWindow;
 import com.ems.ui.ListWindow;
 
 import javafx.collections.FXCollections;
@@ -48,6 +49,11 @@ public class PersonnelListWindow extends ListWindow {
 			e.printStackTrace();
 			throw new DataReadException();
 		}
+	}
+
+	@Override
+	protected AddActionWindow getAddActionWindow() {
+		return new PersonnelAddWindow();
 	}
 	
 }
