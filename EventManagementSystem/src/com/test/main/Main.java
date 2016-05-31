@@ -6,21 +6,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.ems.baseclasses.Student;
+import com.ems.baseclasses.UserLogin;
 import com.ems.data.DataSaver;
 import com.ems.data.dao.DaoFactory;
 import com.ems.data.dao.DaoInterface;
+import com.ems.data.dao.UserLoginDao;
 
 public class Main {
 	public static void main(String[] args) throws JSONException {		
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("UserName", "Bande");
-		map.put("Password", "Dande");
-		JSONObject data = DataSaver.readData("userlogin.json", map);
-		if(data == null){
-			System.out.println("null");
-		}else{
-			System.out.println(data);
-		}
+		UserLogin user = new UserLogin("Sujan", "test1233");
+		UserLoginDao loginDao = new UserLoginDao(user);
+		System.out.println(loginDao.authUser());
 		
 		DaoInterface interfaceD = DaoFactory.getDaoInterface(new Student());
 		if(interfaceD == null){
