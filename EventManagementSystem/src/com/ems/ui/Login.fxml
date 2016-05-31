@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="259.0" prefWidth="384.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <SplitPane dividerPositions="0.292817679558011" focusTraversable="true" layoutX="29.0" layoutY="34.0" orientation="VERTICAL" prefHeight="183.0" prefWidth="310.0">
+      <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="80.0" prefWidth="308.0">
+          <children>
+            <Label layoutX="14.0" layoutY="11.0" text="User Login" textFill="#661800">
+              <font>
+                <Font name="System Bold" size="20.0" />
+              </font>
+            </Label>
+          </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+          <children>
+            <Label layoutX="28.0" layoutY="27.0" text="Username :" />
+            <Label layoutX="32.0" layoutY="55.0" text="Password :" />
+            <TextField fx:id="txtUsername" layoutX="94.0" layoutY="24.0" prefWidth="200.0" />
+            <PasswordField fx:id="txtPassword" layoutX="94.0" layoutY="55.0" prefWidth="200.0" />
+            <Button fx:id="btnLogin" layoutX="238.0" layoutY="91.0" mnemonicParsing="false" text="Login" />
+          </children>
+        </AnchorPane>
+      </items>
+    </SplitPane>
+    <Label fx:id="lblMessage" layoutX="29.0" layoutY="229.0" prefWidth="93.0" text="" />
+  </children>
+</AnchorPane>
