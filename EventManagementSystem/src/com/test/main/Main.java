@@ -1,13 +1,9 @@
 package com.test.main;
 
-import java.util.HashMap;
-
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.ems.baseclasses.Student;
 import com.ems.baseclasses.UserLogin;
-import com.ems.data.DataSaver;
 import com.ems.data.dao.DaoFactory;
 import com.ems.data.dao.DaoInterface;
 import com.ems.data.dao.UserLoginDao;
