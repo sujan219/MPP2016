@@ -7,8 +7,11 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.ems.data.dao.DataReadException;
+import com.ems.data.dao.DataSaveException;
+
 public class DataSaver {
-	public static JSONObject readData(String fileName, Map<String, String> map){
+	public static JSONObject readSingleData(String fileName, Map<String, String> map) throws DataReadException{
 		try{
 			File file = new File(fileName);
 			String jsonStr = FileUtility.readFile(file);
@@ -35,25 +38,43 @@ public class DataSaver {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
+			throw new DataReadException();
 		}
 		return null;
 	}
 	
-	public static void writeData(String fileName, JSONObject obj, boolean isNewData) throws Exception {
-		File file = new File(fileName);
-		String jsonStr = FileUtility.readFile(file);
-		JSONArray jsonArray = new JSONArray(jsonStr);
-		
-		if(isNewData){
-			if(jsonArray.length() == 0){
-				obj.put("Id", 1);
-			}else{
-				JSONObject lastObj = jsonArray.getJSONObject(jsonArray.length()-2);
-				obj.put("Id", lastObj.getInt("Id") + 1);
-			}
+	public static JSONArray readAllData(String fileName) throws DataReadException{
+		try{
+			File file = new File(fileName);
+			String jsonStr = FileUtility.readFile(file);
+			JSONArray jsonArray = new JSONArray(jsonStr);
+			return jsonArray;
+		}catch(Exception e){
+			e.printStackTrace();
+			throw new DataReadException();
 		}
-		
-		jsonArray.put(obj);
-		FileUtility.writeFile(file, jsonArray.toString());
+	}
+	
+	public static void writeData(String fileName, JSONObject obj, boolean isNewData) throws DataSaveException {
+		try{
+			File file = new File(fileName);
+			String jsonStr = FileUtility.readFile(file);
+			JSONArray jsonArray = new JSONArray(jsonStr);
+			
+			if(isNewData){
+				if(jsonArray.length() == 0){
+					obj.put("Id", 1);
+				}else{
+					JSONObject lastObj = jsonArray.getJSONObject(jsonArray.length()-1);
+					obj.put("Id", lastObj.getInt("Id") + 1);
+				}
+			}
+			
+			jsonArray.put(obj);
+			FileUtility.writeFile(file, jsonArray.toString());
+		}catch(Exception e){
+			e.printStackTrace();
+			throw new DataSaveException();
+		}
 	}
 }

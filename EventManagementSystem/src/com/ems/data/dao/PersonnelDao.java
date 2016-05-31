@@ -1,5 +1,6 @@
 package com.ems.data.dao;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.ems.baseclasses.Personnel;
@@ -8,16 +9,18 @@ import com.ems.data.DataSaver;
 public class PersonnelDao implements DaoInterface{
 
 	private Personnel personnel;
-	private static final String FILE_NAME = "personnel.json";
-	private static final String KEY_ID = "Id";
-	private static final String KEY_NAME = "Name";
-	private static final String KEY_DESCRIPTION = "Description";
-	private static final String KEY_IS_EVENT_MANAGER = "IsEventManager";
-	private static final String KEY_IS_DRIVER = "IsDriver";
+	public static final String FILE_NAME = "personnel.json";
+	public static final String KEY_ID = "Id";
+	public static final String KEY_NAME = "Name";
+	public static final String KEY_DESCRIPTION = "Description";
+	public static final String KEY_IS_EVENT_MANAGER = "IsEventManager";
+	public static final String KEY_IS_DRIVER = "IsDriver";
 	
 	public PersonnelDao(Object obj) {
 		personnel = (Personnel) obj;
 	}
+	
+	public PersonnelDao(){}
 	
 	@Override
 	public void saveNewRecord() throws DataSaveException {
@@ -29,6 +32,7 @@ public class PersonnelDao implements DaoInterface{
 			obj.put(KEY_IS_DRIVER, personnel.isDriver());
 			DataSaver.writeData(FILE_NAME, obj, true);
 		}catch(Exception e){
+			e.printStackTrace();
 			throw new DataSaveException();
 		}
 	}
@@ -41,5 +45,15 @@ public class PersonnelDao implements DaoInterface{
 	@Override
 	public void deleteRecord() throws DataSaveException {
 		
+	}
+
+	@Override
+	public JSONObject getRecordById(int id) throws DataReadException {
+		return null;
+	}
+
+	@Override
+	public JSONArray getAllRecords() throws DataReadException {
+		return DataSaver.readAllData(FILE_NAME);
 	}
 }

@@ -3,6 +3,8 @@ package com.ems.ui;
 import java.io.IOException;
 import java.util.List;
 
+import com.ems.data.dao.DataReadException;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -55,7 +57,11 @@ public abstract class ListWindow extends Stage {
 	}
 	
 	private void loadDataIntoTable(){
-		
+		try {
+			tableView.setItems(getTableContent());
+		} catch (DataReadException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void addAction(){
@@ -67,4 +73,5 @@ public abstract class ListWindow extends Stage {
 	}
 	
 	protected abstract List<String> getColumns();
+	protected abstract ObservableList<ObservableList<String>> getTableContent() throws DataReadException;
 }

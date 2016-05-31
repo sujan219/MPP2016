@@ -12,11 +12,11 @@ public class Main {
 		UserLoginDao loginDao = new UserLoginDao(user);
 		System.out.println(loginDao.authUser());
 		
-		DaoInterface interfaceD = DaoFactory.getDaoInterface(new Personnel(0, "Sujan", "test", true, true));
+		/*DaoInterface interfaceD = DaoFactory.getDaoInterface(new Personnel(0, "Sujan", "test", true, true));
 		if(interfaceD == null){
 			System.out.println("null");
 		}else{
 			interfaceD.saveNewRecord();
-		}
+		}*/
 	}
 }

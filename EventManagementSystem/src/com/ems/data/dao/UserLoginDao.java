@@ -23,7 +23,12 @@ public class UserLoginDao {
 		map.put(KEY_USERNAME, userLogin.getUserName());
 		map.put(KEY_PASSWORD, userLogin.getPassword());
 		
-		JSONObject data = DataSaver.readData(FILE_NAME, map);
+		JSONObject data = null;
+		try {
+			data = DataSaver.readSingleData(FILE_NAME, map);
+		} catch (DataReadException e) {
+			e.printStackTrace();
+		}
 		if(data == null){
 			return false;
 		}else{
