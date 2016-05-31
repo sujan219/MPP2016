@@ -39,16 +39,21 @@ public class DataSaver {
 		return null;
 	}
 	
-	public static boolean writeData(String fileName, JSONObject obj){
-		try{
-			File file = new File(fileName);
-			String jsonStr = FileUtility.readFile(file);
-			JSONArray jsonArray = new JSONArray(jsonStr);
-			jsonArray.put(obj);
-			FileUtility.writeFile(file, jsonArray.toString());
-		}catch(Exception e){
-			e.printStackTrace();
+	public static void writeData(String fileName, JSONObject obj, boolean isNewData) throws Exception {
+		File file = new File(fileName);
+		String jsonStr = FileUtility.readFile(file);
+		JSONArray jsonArray = new JSONArray(jsonStr);
+		
+		if(isNewData){
+			if(jsonArray.length() == 0){
+				obj.put("Id", 1);
+			}else{
+				JSONObject lastObj = jsonArray.getJSONObject(jsonArray.length()-2);
+				obj.put("Id", lastObj.getInt("Id") + 1);
+			}
 		}
-		return true;
+		
+		jsonArray.put(obj);
+		FileUtility.writeFile(file, jsonArray.toString());
 	}
 }
