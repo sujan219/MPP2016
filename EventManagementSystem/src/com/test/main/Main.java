@@ -1,9 +1,6 @@
 package com.test.main;
 
-import org.json.JSONException;
-
 import com.ems.baseclasses.Personnel;
-import com.ems.baseclasses.Student;
 import com.ems.baseclasses.UserLogin;
 import com.ems.data.dao.DaoFactory;
 import com.ems.data.dao.DaoInterface;
