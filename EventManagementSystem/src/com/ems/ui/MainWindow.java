@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
+import com.ems.ui.event.EventWindow;
 import com.ems.ui.personnel.PersonnelListWindow;
 import com.ems.ui.resource.ResourceListWindow;
 import com.ems.ui.student.StudentListWindow;
@@ -26,6 +27,7 @@ public class MainWindow extends Stage implements EventHandler<ActionEvent>{
 	private MenuItem transportMenuItem;
 	private MenuItem resourceMenuItem;
 	private MenuItem studentMenuItem;
+	private MenuItem createEventMenu;
 	
 	public MainWindow(Stage aPrimaryStage){
 		primaryStage = aPrimaryStage;
@@ -52,10 +54,8 @@ public class MainWindow extends Stage implements EventHandler<ActionEvent>{
 		menuBar.getMenus().add(fileMenu);
 		menuBar.getMenus().add(recordMenu);
 		
-		MenuItem createEventMenu = new MenuItem("Create New Event");
-		MenuItem viewPastMenu = new MenuItem("View Past Events");
+		createEventMenu = new MenuItem("Create New Event");
 		fileMenu.getItems().add(createEventMenu);
-		fileMenu.getItems().add(viewPastMenu);
 		
 		personnelMenuItem = new MenuItem("Personnel");
 		transportMenuItem = new MenuItem("Transport");
@@ -67,6 +67,7 @@ public class MainWindow extends Stage implements EventHandler<ActionEvent>{
 		transportMenuItem.setOnAction(this);
 		resourceMenuItem.setOnAction(this);
 		studentMenuItem.setOnAction(this);
+		createEventMenu.setOnAction(this);
 	}
 
 	@Override
@@ -79,6 +80,8 @@ public class MainWindow extends Stage implements EventHandler<ActionEvent>{
 			new ResourceListWindow();
 		}else if(event.getSource() == studentMenuItem){
 			new StudentListWindow();
+		}else if(event.getSource() == createEventMenu){
+			new EventWindow();
 		}
 	}
 }

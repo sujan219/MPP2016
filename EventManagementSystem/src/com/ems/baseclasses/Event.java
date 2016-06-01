@@ -1,11 +1,13 @@
 package com.ems.baseclasses;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public abstract class Event extends DataObject {
 
 	private int id;
+	private String name;
 	private String location;
 	private String description;
 	private Calendar startDateTime;
@@ -26,6 +28,11 @@ public abstract class Event extends DataObject {
 		this.endDateTime = endDateTime;
 		this.type = type;
 		this.fund = fund;
+		
+		managerList = new ArrayList<>();
+		resourceList = new ArrayList<>();
+		studentList = new ArrayList<>();
+		expenseList = new ArrayList<>();
 	}
 	
 	@Override
@@ -55,5 +62,41 @@ public abstract class Event extends DataObject {
 	
 	public double getFund() {
 		return fund;
+	}
+	
+	public void addResourceInEvent(Resource r){
+		resourceList.add(r);
+	}
+	
+	public void addStudentInEvent(Student s){
+		studentList.add(s);
+	}
+	
+	public void removeResourceFromEvent(Resource r){
+		//TODO
+	}
+	
+	public void removeStudentFromEvent(Student s){
+		//TODO
+	}
+	
+	private void setTotalFund(double totalFund) {
+		fund = totalFund;
+	}
+	
+	public void addEventManager(Personnel p){
+		managerList.add(p);
+	}
+	
+	private void addExpense(Expense e) {
+		expenseList.add(e);
+	}
+	
+	private void removeExpense() {
+		// TODO Auto-generated method stub
+	}
+	
+	private void generateReport() {
+		// TODO Auto-generated method stub
 	}
 }

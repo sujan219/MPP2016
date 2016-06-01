@@ -57,20 +57,26 @@ public class TransportAddWindow extends AddActionWindow{
 
 	@Override
 	public DataObject getActionObject() {
-		String name = nameField.getText();
-		String description = descriptionField.getText();
-		int capacity = Integer.parseInt(capacityField.getText());
-		
-		if(name.length() == 0){
-			messageLabel.setText("Name cannot be empty");
-		}else if(capacity == 0){
-			messageLabel.setText("Capacity cannot be empty");
-		}
-		else if(description.length() == 0){
-			messageLabel.setText("Description cannot be empty");
-		}else{
-			return new Transport(entityId, name, description, capacity);
+		try	{
+			String name = nameField.getText();
+			String description = descriptionField.getText();
+			int capacity = Integer.parseInt(capacityField.getText());
+			if(name.length() == 0){
+				messageLabel.setText("Name cannot be empty");
+			}else if(capacity == 0){
+				messageLabel.setText("Capacity cannot be empty");
+			}
+			else if(description.length() == 0){
+				messageLabel.setText("Description cannot be empty");
+			}else{
+				return new Transport(entityId, name, description, capacity);
+			}
+		}catch(Exception e)	{
+			e.printStackTrace();
+			messageLabel.setText("Invalid quantity");
 		}
 		return null;
+		
+		
 	}
 }
