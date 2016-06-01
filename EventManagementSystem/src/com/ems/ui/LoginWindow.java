@@ -2,6 +2,7 @@ package com.ems.ui;
 
 import com.ems.baseclasses.UserLogin;
 import com.ems.data.dao.UserLoginDao;
+import com.ems.ui.event.PersonnelDependencyWindow;
 import com.ems.ui.event.StudentDependencyWindow;
 
 import javafx.application.Application;
@@ -25,8 +26,8 @@ public class LoginWindow extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		
-		//new MainWindow(stage);
-		new StudentDependencyWindow();
+		new MainWindow(stage);
+		//new PersonnelDependencyWindow();
 		stage.hide();
 		
 		Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));

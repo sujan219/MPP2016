@@ -23,6 +23,7 @@ public abstract class AbstractEventDependenciesWindow extends ModalDialog{
 	
 	private List<DataObject> dataObjectList;
 	private VBox vBox;
+	private DependencyAddedListener listener;
 	
 	public AbstractEventDependenciesWindow(String title){
 		try {
@@ -46,14 +47,21 @@ public abstract class AbstractEventDependenciesWindow extends ModalDialog{
 			addButton.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
-					List<DataObject> selectedDataList = getSelectedObjects();
-					
+					List<DataObject> obj = getSelectedObjects();
+					if(obj != null && listener != null){
+						listener.dependencyAdded(obj);
+						AbstractEventDependenciesWindow.this.close();
+					}
 				}
 			});
 		} catch (Exception e) {
 			e.printStackTrace();
 			DialogUtil.showErrorDialog(e.getMessage());
 		}
+	}
+	
+	public void setDependencyAddedListener(DependencyAddedListener listener){
+		this.listener = listener;
 	}
 	
 	protected abstract Pane getEachPane(int index);

@@ -4,7 +4,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ScrollPane prefHeight="351.0" prefWidth="600.0">
@@ -12,6 +11,6 @@
             <VBox id="vBox" prefHeight="338.0" prefWidth="573.0" />
          </content>
       </ScrollPane>
-      <Button id="addButton" contentDisplay="RIGHT" mnemonicParsing="false" text="Button" />
+      <Button id="addButton" contentDisplay="RIGHT" mnemonicParsing="false" text="Add" />
    </children>
 </VBox>

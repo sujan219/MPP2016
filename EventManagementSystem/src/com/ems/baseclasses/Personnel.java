@@ -34,4 +34,9 @@ public class Personnel extends DataObject{
 	public boolean isDriver() {
 		return isDriver;
 	}
+	
+	@Override
+	public String toString() {
+		return name;
+	}
 }
