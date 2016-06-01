@@ -1,6 +1,7 @@
 package com.ems.data.dao;
 
 import com.ems.baseclasses.Personnel;
+import com.ems.baseclasses.Resource;
 import com.ems.baseclasses.Student;
 
 public class DaoFactory {
@@ -9,6 +10,8 @@ public class DaoFactory {
 			return new StudentDao(obj);
 		}else if(obj instanceof Personnel){
 			return new PersonnelDao(obj);
+		}else if(obj instanceof Resource){
+			return new ResourceDao(obj);
 		}
 		return null;
 	}

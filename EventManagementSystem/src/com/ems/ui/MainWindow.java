@@ -5,6 +5,8 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import com.ems.ui.personnel.PersonnelListWindow;
+import com.ems.ui.resource.ResourceListWindow;
+import com.ems.ui.student.StudentListWindow;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,8 +18,14 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
-public class MainWindow extends Stage{
+public class MainWindow extends Stage implements EventHandler<ActionEvent>{
+	
 	private Stage primaryStage;
+	private MenuItem personnelMenuItem;
+	private MenuItem transportMenuItem;
+	private MenuItem resourceMenuItem;
+	private MenuItem studentMenuItem;
+	
 	public MainWindow(Stage aPrimaryStage){
 		primaryStage = aPrimaryStage;
 		Parent root;
@@ -28,7 +36,7 @@ public class MainWindow extends Stage{
 			MenuBar menuBar = (MenuBar) root.lookup("#menuBar");
 			initMenuItems(menuBar);
 			
-			setScene(new Scene(root));
+			setScene(new Scene(root, 700, 500));
 			show();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -48,17 +56,28 @@ public class MainWindow extends Stage{
 		fileMenu.getItems().add(createEventMenu);
 		fileMenu.getItems().add(viewPastMenu);
 		
-		MenuItem personnelMenuItem = new MenuItem("Personnel");
-		MenuItem transportMenuItem = new MenuItem("Transport");
-		MenuItem resourceMenuItem = new MenuItem("Resource");
-		MenuItem studentMenuItem = new MenuItem("Student");
+		personnelMenuItem = new MenuItem("Personnel");
+		transportMenuItem = new MenuItem("Transport");
+		resourceMenuItem = new MenuItem("Resource");
+		studentMenuItem = new MenuItem("Student");
 		recordMenu.getItems().addAll(personnelMenuItem, transportMenuItem, resourceMenuItem, studentMenuItem);
 		
-		personnelMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				new PersonnelListWindow();
-			}
-		});
+		personnelMenuItem.setOnAction(this);
+		transportMenuItem.setOnAction(this);
+		resourceMenuItem.setOnAction(this);
+		studentMenuItem.setOnAction(this);
+	}
+
+	@Override
+	public void handle(ActionEvent event) {
+		if(event.getSource() == personnelMenuItem){
+			new PersonnelListWindow();
+		}else if(event.getSource() == transportMenuItem){
+			
+		}else if(event.getSource() == resourceMenuItem){
+			new ResourceListWindow();
+		}else if(event.getSource() == studentMenuItem){
+			new StudentListWindow();
+		}
 	}
 }

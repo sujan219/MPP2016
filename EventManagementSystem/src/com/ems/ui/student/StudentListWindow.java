@@ -15,7 +15,7 @@ import javafx.collections.ObservableList;
 
 public class StudentListWindow extends ListWindow{
 
-	private static final String TITLE = "Personnel";
+	private static final String TITLE = "Student";
 	public StudentListWindow() {
 		super(TITLE);
 	}
@@ -49,7 +49,7 @@ public class StudentListWindow extends ListWindow{
 
 	@Override
 	protected AddActionWindow getAddActionWindow(int id) {
-		return null;
+		return new StudentAddWindow(id, this);
 	}
 
 	@Override
