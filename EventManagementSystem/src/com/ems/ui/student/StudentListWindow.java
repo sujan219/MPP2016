@@ -3,11 +3,9 @@ package com.ems.ui.student;
 import java.util.Arrays;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
+import com.ems.baseclasses.DataObject;
+import com.ems.baseclasses.Student;
 import com.ems.data.dao.DataReadException;
-import com.ems.data.dao.PersonnelDao;
 import com.ems.data.dao.StudentDao;
 import com.ems.ui.AddActionWindow;
 import com.ems.ui.ListWindow;
@@ -31,15 +29,15 @@ public class StudentListWindow extends ListWindow{
 	protected ObservableList<ObservableList<String>> getTableContent() throws DataReadException {
 		try{
 			StudentDao sDao = new StudentDao();
-			JSONArray jsonArray = sDao.getAllRecords();
+			List<DataObject> dataList = sDao.getAllRecords();
 			ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
-			for(int i=0; i<jsonArray.length(); ++i){
-				JSONObject jsonObject = jsonArray.getJSONObject(i);
+			for(DataObject eachDataObject:dataList){
+				Student eachStudent = (Student) eachDataObject;
 				ObservableList<String> row = FXCollections.observableArrayList();
-				row.add(jsonObject.getInt(StudentDao.KEY_ID) + "");
-				row.add(jsonObject.getString(StudentDao.KEY_NAME));
-				row.add(jsonObject.getString(StudentDao.KEY_EMAIL));
-				row.add(jsonObject.getString(StudentDao.KEY_ENTRY) + "");
+				row.add(eachStudent.getId() + "");
+				row.add(eachStudent.getName());
+				row.add(eachStudent.getEmail());
+				row.add(eachStudent.getEntry());
 				data.add(row);
 			}
 			return data;
@@ -50,8 +48,12 @@ public class StudentListWindow extends ListWindow{
 	}
 
 	@Override
-	protected AddActionWindow getAddActionWindow() {
-		// TODO Auto-generated method stub
+	protected AddActionWindow getAddActionWindow(int id) {
 		return null;
+	}
+
+	@Override
+	protected DataObject getDataObjectById(int id) {
+		return new Student(id, null, null, null);
 	}
 }

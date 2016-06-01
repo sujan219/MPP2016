@@ -3,7 +3,7 @@ package com.test.main;
 import com.ems.baseclasses.Personnel;
 import com.ems.baseclasses.UserLogin;
 import com.ems.data.dao.DaoFactory;
-import com.ems.data.dao.DaoInterface;
+import com.ems.data.dao.AbstractDao;
 import com.ems.data.dao.UserLoginDao;
 
 public class Main {

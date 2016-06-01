@@ -3,7 +3,9 @@ package com.ems.ui;
 import java.io.IOException;
 import java.util.List;
 
+import com.ems.baseclasses.DataObject;
 import com.ems.data.dao.DataReadException;
+import com.ems.data.dao.DataSaveException;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -18,14 +20,12 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
-public abstract class ListWindow extends ModalDialog implements EventHandler<ActionEvent> {
+public abstract class ListWindow extends ModalDialog implements Refreshable, EventHandler<ActionEvent> {
 	
 	private TableView tableView;
+	private ObservableList<ObservableList<String>> tableData;
 	
 	private ContextMenu ctxMenu;
 	private MenuItem addMenuItem;
@@ -66,9 +66,16 @@ public abstract class ListWindow extends ModalDialog implements EventHandler<Act
 	    }       
 	}
 	
+	@Override
+	public void refresh(){
+		tableData.removeAll(tableData);
+		loadDataIntoTable();
+	}
+	
 	private void loadDataIntoTable(){
 		try {
-			tableView.setItems(getTableContent());
+			tableData = getTableContent();
+			tableView.setItems(tableData);
 		} catch (DataReadException e) {
 			e.printStackTrace();
 		}
@@ -99,20 +106,47 @@ public abstract class ListWindow extends ModalDialog implements EventHandler<Act
 	}
 	
 	private void addAction(){
-		AddActionWindow addActionWindow = getAddActionWindow();
+		AddActionWindow addActionWindow = getAddActionWindow(0);
 		addActionWindow.show();
 	}
 	
 	private void editAction(){
-		
+		try{
+			List<String> selectedItem = (List<String>)tableView.getSelectionModel().getSelectedItem();
+			if(selectedItem == null || selectedItem.size() == 0){
+				DialogUtil.showErrorDialog("Select an item to perform action");
+			}else{
+				int id = Integer.parseInt(selectedItem.get(0));
+				AddActionWindow addActionWindow = getAddActionWindow(id);
+				addActionWindow.show();
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			DialogUtil.showErrorDialog(e.getMessage());
+		}
 	}
 	
 	private void deleteAction(){
-		
+		if(DialogUtil.showConfirmDialog()){
+			List<String> selectedItem = (List<String>)tableView.getSelectionModel().getSelectedItem();
+			if(selectedItem == null || selectedItem.size() == 0){
+				DialogUtil.showErrorDialog("Select an item to perform action");
+			}else{
+				int id = Integer.parseInt(selectedItem.get(0));
+				DataObject dataObject = getDataObjectById(id);
+				try {
+					dataObject.deleteData();
+					refresh();
+				} catch (DataSaveException e) {
+					e.printStackTrace();
+					DialogUtil.showErrorDialog();
+				}
+			}
+		}
 	}
 	
 	protected abstract List<String> getColumns();
 	protected abstract ObservableList<ObservableList<String>> getTableContent() throws DataReadException;
-	
-	protected abstract AddActionWindow getAddActionWindow();
+	protected abstract AddActionWindow getAddActionWindow(int id);
+	protected abstract DataObject getDataObjectById(int id);
 }

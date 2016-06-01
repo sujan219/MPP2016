@@ -1,12 +1,13 @@
 package com.ems.data.dao;
 
-import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.ems.baseclasses.DataObject;
 import com.ems.baseclasses.Student;
 import com.ems.data.DataSaver;
 
-public class StudentDao implements DaoInterface{
+public class StudentDao extends AbstractDao{
 	private Student std;
 	public static final String KEY_ID = "Id";
 	public static final String KEY_NAME = "Name";
@@ -43,15 +44,14 @@ public class StudentDao implements DaoInterface{
 	public void deleteRecord() {
 		
 	}
-
+	
 	@Override
-	public JSONObject getRecordById(int id) throws DataReadException {
+	public DataObject getObjectFromJSON(JSONObject obj) throws JSONException {
 		return null;
 	}
-
 	@Override
-	public JSONArray getAllRecords() throws DataReadException {
-		return DataSaver.readAllData(FILE_NAME);
+	public String getFileName() {
+		return FILE_NAME;
 	}
 
 }

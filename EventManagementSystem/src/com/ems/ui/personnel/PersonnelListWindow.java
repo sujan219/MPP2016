@@ -2,11 +2,9 @@ package com.ems.ui.personnel;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Observable;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
+import com.ems.baseclasses.DataObject;
+import com.ems.baseclasses.Personnel;
 import com.ems.data.dao.DataReadException;
 import com.ems.data.dao.PersonnelDao;
 import com.ems.ui.AddActionWindow;
@@ -32,16 +30,16 @@ public class PersonnelListWindow extends ListWindow {
 	protected ObservableList<ObservableList<String>> getTableContent() throws DataReadException {
 		try{
 			PersonnelDao pDao = new PersonnelDao();
-			JSONArray jsonArray = pDao.getAllRecords();
+			List<DataObject> dataList = pDao.getAllRecords();
 			ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
-			for(int i=0; i<jsonArray.length(); ++i){
-				JSONObject jsonObject = jsonArray.getJSONObject(i);
+			for(DataObject dataObject:dataList){
+				Personnel personnel = (Personnel) dataObject;
 				ObservableList<String> row = FXCollections.observableArrayList();
-				row.add(jsonObject.getInt(PersonnelDao.KEY_ID) + "");
-				row.add(jsonObject.getString(PersonnelDao.KEY_NAME));
-				row.add(jsonObject.getString(PersonnelDao.KEY_DESCRIPTION));
-				row.add(jsonObject.getBoolean(PersonnelDao.KEY_IS_EVENT_MANAGER) + "");
-				row.add(jsonObject.getBoolean(PersonnelDao.KEY_IS_DRIVER) + "");
+				row.add(personnel.getId() + "");
+				row.add(personnel.getName());
+				row.add(personnel.getDescription());
+				row.add(personnel.isEventManager() + "");
+				row.add(personnel.isDriver() + "");
 				data.add(row);
 			}
 			return data;
@@ -52,8 +50,12 @@ public class PersonnelListWindow extends ListWindow {
 	}
 
 	@Override
-	protected AddActionWindow getAddActionWindow() {
-		return new PersonnelAddWindow();
+	protected AddActionWindow getAddActionWindow(int id) {
+		return new PersonnelAddWindow(id, this);
 	}
-	
+
+	@Override
+	protected DataObject getDataObjectById(int id) {
+		return new Personnel(id, null, null, false, false);
+	}
 }

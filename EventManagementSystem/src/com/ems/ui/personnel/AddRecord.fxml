@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="293.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="293.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -16,17 +16,19 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <Label text="Name" />
-      <TextField GridPane.columnIndex="1" />
+      <TextField id="nameField" GridPane.columnIndex="1" />
       <Label text="Description" GridPane.rowIndex="1" />
-      <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextArea id="descField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Label text="Is Event Manager" GridPane.rowIndex="2" />
       <Label text="Is Driver" GridPane.rowIndex="3" />
-      <CheckBox mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <CheckBox mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <CheckBox id="isMgrField" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <CheckBox id="isDriverField" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="66.0" text="Save" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+      <Label id="message" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

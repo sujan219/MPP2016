@@ -49,7 +49,6 @@ public class LoginWindow extends Application {
 				}
 				UserLogin user = new UserLogin(userName.getText(), password.getText());
 				UserLoginDao loginDao = new UserLoginDao(user);
-				System.out.println(loginDao.authUser());
 				if(loginDao.authUser())	{
 					new MainWindow(stage);
 					stage.hide();

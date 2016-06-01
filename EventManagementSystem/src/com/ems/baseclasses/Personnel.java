@@ -1,6 +1,6 @@
 package com.ems.baseclasses;
 
-public class Personnel {
+public class Personnel extends DataObject{
 	private int id;
 	private String name;
 	private String description;
