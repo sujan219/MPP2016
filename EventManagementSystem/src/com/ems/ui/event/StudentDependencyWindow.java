@@ -27,6 +27,7 @@ public class StudentDependencyWindow extends AbstractEventDependenciesWindow{
 		hbox.getChildren().addAll(new TextField(), chk);
 		pane.getChildren().add(hbox);
 		return pane;
+		
 	}
 
 	@Override
