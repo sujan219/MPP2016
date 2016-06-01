@@ -19,60 +19,21 @@ public class PersonnelDao extends AbstractDao{
 	public static final String KEY_IS_DRIVER = "IsDriver";
 	
 	public PersonnelDao(Object obj) {
+		super((Personnel)obj);
 		personnel = (Personnel) obj;
 	}
 	
 	public PersonnelDao(){}
 	
 	@Override
-	public void saveNewRecord() throws DataSaveException {
-		try{
-			JSONObject obj = new JSONObject();
-			obj.put(KEY_NAME, personnel.getName());
-			obj.put(KEY_DESCRIPTION, personnel.getDescription());
-			obj.put(KEY_IS_EVENT_MANAGER, personnel.isEventManager());
-			obj.put(KEY_IS_DRIVER, personnel.isDriver());
-			DataSaver.writeData(FILE_NAME, obj, true);
-		}catch(Exception e){
-			e.printStackTrace();
-			throw new DataSaveException();
-		}
-	}
-
-	@Override
-	public void modifyRecord() throws DataSaveException {
-		if(personnel.getId() == 0){
-			throw new DataSaveException("The record cannot be modified because it does not exist. Check the id of record");
-		}else{
-			try{
-				JSONObject obj = new JSONObject();
-				obj.put(KEY_ID, personnel.getId());
-				obj.put(KEY_NAME, personnel.getName());
-				obj.put(KEY_DESCRIPTION, personnel.getDescription());
-				obj.put(KEY_IS_EVENT_MANAGER, personnel.isEventManager());
-				obj.put(KEY_IS_DRIVER, personnel.isDriver());
-				DataSaver.writeData(FILE_NAME, obj, false);
-			}catch(Exception e){
-				e.printStackTrace();
-				throw new DataSaveException();
-			}
-		}
-	}
-
-	@Override
-	public void deleteRecord() throws DataSaveException {
-		if(personnel.getId() == 0){
-			throw new DataSaveException("The record cannot be deleted because it does not exist. Check the id of record");
-		}else{
-			try{
-				DataSaver.deleteData(FILE_NAME, personnel.getId());
-				DialogUtil.showSuccessDialog("Record deleted successfully");
-			}catch(Exception e){
-				e.printStackTrace();
-				DialogUtil.showErrorDialog();
-				throw new DataSaveException();
-			}
-		}
+	public JSONObject getJSONObject() throws JSONException {
+		JSONObject obj = new JSONObject();
+		obj.put(KEY_ID, personnel.getId());
+		obj.put(KEY_NAME, personnel.getName());
+		obj.put(KEY_DESCRIPTION, personnel.getDescription());
+		obj.put(KEY_IS_EVENT_MANAGER, personnel.isEventManager());
+		obj.put(KEY_IS_DRIVER, personnel.isDriver());
+		return obj;
 	}
 
 	@Override
