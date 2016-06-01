@@ -7,6 +7,7 @@ import java.util.Arrays;
 import com.ems.ui.personnel.PersonnelListWindow;
 import com.ems.ui.resource.ResourceListWindow;
 import com.ems.ui.student.StudentListWindow;
+import com.ems.ui.transport.TransportListWindow;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -73,7 +74,7 @@ public class MainWindow extends Stage implements EventHandler<ActionEvent>{
 		if(event.getSource() == personnelMenuItem){
 			new PersonnelListWindow();
 		}else if(event.getSource() == transportMenuItem){
-			
+			new TransportListWindow();
 		}else if(event.getSource() == resourceMenuItem){
 			new ResourceListWindow();
 		}else if(event.getSource() == studentMenuItem){

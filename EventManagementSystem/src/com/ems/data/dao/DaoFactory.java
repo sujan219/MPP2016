@@ -3,6 +3,7 @@ package com.ems.data.dao;
 import com.ems.baseclasses.Personnel;
 import com.ems.baseclasses.Resource;
 import com.ems.baseclasses.Student;
+import com.ems.baseclasses.Transport;
 
 public class DaoFactory {
 	public static AbstractDao getDaoInterface(Object obj){
@@ -12,6 +13,8 @@ public class DaoFactory {
 			return new PersonnelDao(obj);
 		}else if(obj instanceof Resource){
 			return new ResourceDao(obj);
+		}else if(obj instanceof Transport){
+			return new TransportDao(obj);
 		}
 		return null;
 	}
