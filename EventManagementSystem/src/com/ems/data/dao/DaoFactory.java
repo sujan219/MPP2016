@@ -23,4 +23,17 @@ public class DaoFactory {
 		}
 		return null;
 	}
+	
+	public static AbstractDao getDaoInterface(String daoType){
+		if(daoType.equalsIgnoreCase("student")){
+			return new StudentDao();
+		}else if(daoType.equalsIgnoreCase("personnel")){
+			return new PersonnelDao();
+		}else if(daoType.equalsIgnoreCase("resource")){
+			return new ResourceDao();
+		}else if(daoType.equalsIgnoreCase("transport")){
+			return new TransportDao();
+		}
+		return null;
+	}
 }
