@@ -24,12 +24,7 @@ public class LoginWindow extends Application {
 	}
 	
 	@Override
-	public void start(Stage stage) throws Exception {
-		
-		new MainWindow(stage);
-		//new PersonnelDependencyWindow();
-		stage.hide();
-		
+	public void start(Stage stage) throws Exception {		
 		Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
 		stage.setTitle("Login");
 		stage.setScene(new Scene(root));

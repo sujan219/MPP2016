@@ -106,8 +106,4 @@ public abstract class Event extends DataObject {
 	public void setExpenseList(List<Expense> e) {
 		expenseList = e;
 	}
-	
-	private void generateReport() {
-		// TODO Auto-generated method stub
-	}
 }
