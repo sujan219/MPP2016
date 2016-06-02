@@ -7,6 +7,7 @@ import java.util.List;
 import com.ems.baseclasses.DataObject;
 import com.ems.baseclasses.Event;
 import com.ems.data.dao.DataReadException;
+import com.ems.data.dao.DataSaveException;
 import com.ems.data.dao.EventDao;
 import com.ems.ui.event.EventWindow;
 import com.ems.ui.event.ReportWindow;
@@ -95,8 +96,10 @@ public class MainWindow extends Stage implements EventHandler<ActionEvent>, Refr
 		hbox.getChildren().add(vbox);
 		
 		Button editButton = new Button("Edit");
-		hbox.getChildren().add(editButton);
+		Button cancelButton = new Button("Cancel");
+		hbox.getChildren().addAll(editButton, cancelButton);
 		HBox.setMargin(editButton, new Insets(15));
+		HBox.setMargin(cancelButton, new Insets(15));
 		pendingEvents.getChildren().add(hbox);
 		pendingEvents.setMargin(hbox, new Insets(10));
 		
@@ -104,6 +107,21 @@ public class MainWindow extends Stage implements EventHandler<ActionEvent>, Refr
 			@Override
 			public void handle(ActionEvent e) {
 				new EventWindow(event.getId(), MainWindow.this);
+			}
+		});
+		
+		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				if(DialogUtil.showConfirmDialog("Are you sure to delete?")){
+					try {
+						event.deleteData();
+						refresh();
+					} catch (DataSaveException e1) {
+						e1.printStackTrace();
+						DialogUtil.showErrorDialog(e1.getMessage());
+					}
+				}
 			}
 		});
 	}
