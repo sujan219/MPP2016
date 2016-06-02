@@ -68,6 +68,7 @@ public class MainWindow extends Stage implements EventHandler<ActionEvent>, Refr
 	
 	private void loadEvents() {
 		pendingEvents.getChildren().removeAll(pendingEvents.getChildren());
+		pastEvents.getChildren().removeAll(pendingEvents.getChildren());
 		EventDao dao = new EventDao();
 		try {
 			List<DataObject> eventList = dao.getAllRecords();
