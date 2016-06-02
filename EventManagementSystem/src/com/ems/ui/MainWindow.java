@@ -1,6 +1,7 @@
 package com.ems.ui;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 
 import com.ems.baseclasses.DataObject;
@@ -8,6 +9,7 @@ import com.ems.baseclasses.Event;
 import com.ems.data.dao.DataReadException;
 import com.ems.data.dao.EventDao;
 import com.ems.ui.event.EventWindow;
+import com.ems.ui.event.ReportWindow;
 import com.ems.ui.personnel.PersonnelListWindow;
 import com.ems.ui.resource.ResourceListWindow;
 import com.ems.ui.student.StudentListWindow;
@@ -40,6 +42,7 @@ public class MainWindow extends Stage implements EventHandler<ActionEvent>, Refr
 	private MenuItem createEventMenu;
 	
 	private VBox pendingEvents;
+	private VBox pastEvents;
 	
 	public MainWindow(Stage aPrimaryStage){
 		primaryStage = aPrimaryStage;
@@ -55,7 +58,7 @@ public class MainWindow extends Stage implements EventHandler<ActionEvent>, Refr
 			
 			show();
 			pendingEvents = (VBox) root.lookup("#pendingEventsVBox");
-			
+			pastEvents = (VBox) root.lookup("#pastEventsVBox");
 			loadEvents();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -68,7 +71,13 @@ public class MainWindow extends Stage implements EventHandler<ActionEvent>, Refr
 		try {
 			List<DataObject> eventList = dao.getAllRecords();
 			for(DataObject dObj:eventList){
-				addPendingEvent((Event)dObj);
+				Event event = (Event)dObj;
+				Calendar cal = event.getEndDateTime();
+				if(cal.getTimeInMillis() > Calendar.getInstance().getTimeInMillis()){
+					addPendingEvent(event);
+				}else{
+					addPastEvent(event);
+				}
 			}
 		} catch (DataReadException e) {
 			e.printStackTrace();
@@ -95,6 +104,30 @@ public class MainWindow extends Stage implements EventHandler<ActionEvent>, Refr
 			@Override
 			public void handle(ActionEvent e) {
 				new EventWindow(event.getId(), MainWindow.this);
+			}
+		});
+	}
+	
+	private void addPastEvent(final Event event){
+		HBox hbox = new HBox();
+		VBox vbox = new VBox();
+		Label eventName = new Label(event.getName() + " : " + event.getLocation());
+		eventName.setFont(Font.font("Arial", FontWeight.BOLD, 13));
+		String startDate = Event.dateFormat.format(event.getStartDateTime().getTime());
+		String endDate = Event.dateFormat.format(event.getEndDateTime().getTime());
+		vbox.getChildren().addAll(eventName, new Label("From: " + startDate), new Label("To: " + endDate));
+		hbox.getChildren().add(vbox);
+		
+		Button reportButton = new Button("Report");
+		hbox.getChildren().add(reportButton);
+		HBox.setMargin(reportButton, new Insets(15));
+		pastEvents.getChildren().add(hbox);
+		pastEvents.setMargin(hbox, new Insets(10));
+		
+		reportButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				new ReportWindow(event);
 			}
 		});
 	}

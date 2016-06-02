@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -13,6 +14,14 @@
             <VBox id="pendingEventsVBox" minHeight="70.0" prefWidth="580.0" />
          </content>
       </ScrollPane>
-      <Label text="Past events" />
+      <Label text="Past events">
+         <VBox.margin>
+            <Insets top="15.0" />
+         </VBox.margin></Label>
+      <ScrollPane prefHeight="174.0" prefWidth="600.0">
+         <content>
+            <VBox id="pastEventsVBox" minHeight="70.0" prefWidth="564.0" />
+         </content>
+      </ScrollPane>
    </children>
 </VBox>
