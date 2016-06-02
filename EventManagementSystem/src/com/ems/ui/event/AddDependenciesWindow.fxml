@@ -11,6 +11,7 @@
             <VBox id="vBox" prefHeight="338.0" prefWidth="573.0" />
          </content>
       </ScrollPane>
-      <Button id="addButton" contentDisplay="RIGHT" mnemonicParsing="false" text="Add" />
+      <Button id="addItemButton" contentDisplay="RIGHT" mnemonicParsing="false" text="Add item" />
+      <Button id="addButton" contentDisplay="RIGHT" mnemonicParsing="false" text="Save" />
    </children>
 </VBox>

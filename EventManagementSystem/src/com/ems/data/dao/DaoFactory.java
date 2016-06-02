@@ -1,6 +1,7 @@
 package com.ems.data.dao;
 
-import com.ems.baseclasses.OnCampusEvent;
+import com.ems.baseclasses.Event;
+import com.ems.baseclasses.Expense;
 import com.ems.baseclasses.Personnel;
 import com.ems.baseclasses.Resource;
 import com.ems.baseclasses.Student;
@@ -16,10 +17,10 @@ public class DaoFactory {
 			return new ResourceDao(obj);
 		}else if(obj instanceof Transport){
 			return new TransportDao(obj);
-		}else if(obj instanceof OnCampusEvent){
-			return new OnCampusEventDao(obj);
-		}else if(obj instanceof OnCampusEvent){
-			return new OffCampusEventDao(obj);
+		}else if(obj instanceof Event){
+			return new EventDao(obj);
+		}else if(obj instanceof Expense){
+			return new ExpenseDao(obj);
 		}
 		return null;
 	}
@@ -33,6 +34,8 @@ public class DaoFactory {
 			return new ResourceDao();
 		}else if(daoType.equalsIgnoreCase("transport")){
 			return new TransportDao();
+		}else if(daoType.equalsIgnoreCase("expense")){
+			return new ExpenseDao();
 		}
 		return null;
 	}

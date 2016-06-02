@@ -24,7 +24,7 @@
       <TextField id="nameField" GridPane.columnIndex="1" />
       <TextField id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <TextField id="entryField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Save" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <Button id="saveButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Save" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
       <Label id="message" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
    </children>
    <padding>

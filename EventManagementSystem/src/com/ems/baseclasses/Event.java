@@ -1,5 +1,6 @@
 package com.ems.baseclasses;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -20,8 +21,14 @@ public abstract class Event extends DataObject {
 	private List<Student> studentList;
 	private List<Expense> expenseList;
 	
-	public Event(int id, String location, String description, Calendar startDateTime, Calendar endDateTime, String type, double fund){
+	public static SimpleDateFormat dateFormat;
+	static{
+		dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+	}
+	
+	public Event(int id, String name, String location, String description, Calendar startDateTime, Calendar endDateTime, String type, double fund){
 		this.id = id;
+		this.name = name;
 		this.location = location;
 		this.description = description;
 		this.startDateTime = startDateTime;
@@ -40,6 +47,10 @@ public abstract class Event extends DataObject {
 		return id;
 	}
 
+	public String getName() {
+		return name;
+	}
+	
 	public String getLocation() {
 		return location;
 	}
@@ -64,36 +75,36 @@ public abstract class Event extends DataObject {
 		return fund;
 	}
 	
-	public void addResourceInEvent(Resource r){
-		resourceList.add(r);
+	public List<Personnel> getManagerList() {
+		return managerList;
 	}
 	
-	public void addStudentInEvent(Student s){
-		studentList.add(s);
+	public List<Resource> getResourceList() {
+		return resourceList;
 	}
 	
-	public void removeResourceFromEvent(Resource r){
-		//TODO
+	public List<Student> getStudentList() {
+		return studentList;
 	}
 	
-	public void removeStudentFromEvent(Student s){
-		//TODO
+	public List<Expense> getExpenseList() {
+		return expenseList;
 	}
 	
-	private void setTotalFund(double totalFund) {
-		fund = totalFund;
+	public void setResourceList(List<Resource> r){
+		resourceList = r;
 	}
 	
-	public void addEventManager(Personnel p){
-		managerList.add(p);
+	public void setStudentList(List<Student> s){
+		studentList = s;
 	}
 	
-	private void addExpense(Expense e) {
-		expenseList.add(e);
+	public void setEventManagerList(List<Personnel >p){
+		managerList = p;
 	}
 	
-	private void removeExpense() {
-		// TODO Auto-generated method stub
+	public void setExpenseList(List<Expense> e) {
+		expenseList = e;
 	}
 	
 	private void generateReport() {

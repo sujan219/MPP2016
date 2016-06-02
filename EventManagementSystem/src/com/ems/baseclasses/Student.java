@@ -29,5 +29,10 @@ public class Student extends DataObject{
 	
 	public String getEntry() {
 		return entry;
-	}	
+	}
+	
+	@Override
+	public String toString() {
+		return getName();
+	}
 }

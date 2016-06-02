@@ -19,7 +19,7 @@ public abstract class AddActionWindow extends ModalDialog {
 	}
 	
 	protected void initAddAction(){
-		Button addButton = (Button) getScene().lookup(".button");
+		Button addButton = (Button) getScene().lookup("#saveButton");
 		addButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -33,7 +33,9 @@ public abstract class AddActionWindow extends ModalDialog {
 							actionObject.modifyData();
 							DialogUtil.showSuccessDialog("Record modified");
 						}
-						refreshable.refresh();
+						if(refreshable != null){
+							refreshable.refresh();
+						}
 						AddActionWindow.this.close();
 					} catch (DataSaveException e) {
 						e.printStackTrace();

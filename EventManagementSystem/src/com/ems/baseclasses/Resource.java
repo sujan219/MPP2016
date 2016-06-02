@@ -29,4 +29,9 @@ public class Resource extends DataObject{
 	public String getDescription() {
 		return description;
 	}
+	
+	@Override
+	public String toString() {
+		return name + " : " + quantity;
+	}
 }

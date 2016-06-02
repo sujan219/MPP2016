@@ -7,5 +7,12 @@
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <MenuBar id="menuBar" />
+      <Label text="Ongoing/upcoming events" />
+      <ScrollPane prefHeight="174.0" prefWidth="600.0">
+         <content>
+            <VBox id="pendingEventsVBox" minHeight="70.0" prefWidth="580.0" />
+         </content>
+      </ScrollPane>
+      <Label text="Past events" />
    </children>
 </VBox>

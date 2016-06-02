@@ -32,6 +32,11 @@ public abstract class AbstractEventDependenciesWindow extends ModalDialog{
 			setScene(new Scene(root));
 			show();
 			
+			if(!title.equalsIgnoreCase("expense")){
+				Button addItemButton = (Button) getScene().lookup("#addItemButton");
+				addItemButton.setVisible(false);
+			}
+			
 			AbstractDao aDao = DaoFactory.getDaoInterface(title);
 			dataObjectList = aDao.getAllRecords();
 			

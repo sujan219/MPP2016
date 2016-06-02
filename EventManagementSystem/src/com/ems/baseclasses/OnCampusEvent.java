@@ -4,8 +4,8 @@ import java.util.Calendar;
 
 public class OnCampusEvent extends Event {
 
-	public OnCampusEvent(int id, String location, String description, Calendar startDateTime, Calendar endDateTime,
+	public OnCampusEvent(int id, String name, String description, Calendar startDateTime, Calendar endDateTime,
 			String type, double fund) {
-		super(id, location, description, startDateTime, endDateTime, type, fund);
+		super(id, name, "OnCampus", description, startDateTime, endDateTime, type, fund);
 	}
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,19 +36,36 @@ public abstract class AbstractDao {
 		}
 	}
 
-	public final List<DataObject> getAllRecords() throws DataReadException {
+	public List<DataObject> getAllRecords(Map<String, String> map) throws DataReadException {
 		List<DataObject> listOfData = new ArrayList<DataObject>();
 		try{
 			JSONArray jsonArray = DataSaver.readAllData(getFileName());
 			for(int i=0; i<jsonArray.length(); ++i){
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
-				listOfData.add(getObjectFromJSON(jsonObject));
+				boolean match = true;
+				if(map != null){
+					Set<String> keys = map.keySet();
+					for(String key:keys){
+						if(!(jsonObject.get(key)+"").equals(map.get(key))){
+							match = false;
+							break;
+						}
+					}
+				}
+				
+				if(match){
+					listOfData.add(getObjectFromJSON(jsonObject));
+				}
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 			throw new DataReadException();
 		}
 		return listOfData;
+	}
+	
+	public final List<DataObject> getAllRecords() throws DataReadException {
+		return getAllRecords(null);
 	}
 	
 	public final void saveNewRecord() throws DataSaveException {
