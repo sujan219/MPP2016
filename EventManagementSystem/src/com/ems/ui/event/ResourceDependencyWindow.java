@@ -54,6 +54,7 @@ public class ResourceDependencyWindow extends AbstractEventDependenciesWindow{
 						DialogUtil.showErrorDialog("Insufficient quantity");
 						return null;
 					}
+					res.setQuantity(inputQuantity);
 					listObject.add(res);
 				}
 			}

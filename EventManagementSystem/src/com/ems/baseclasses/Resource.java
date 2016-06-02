@@ -26,6 +26,10 @@ public class Resource extends DataObject{
 		return quantity;
 	}
 	
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	
 	public String getDescription() {
 		return description;
 	}
