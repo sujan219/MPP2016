@@ -16,6 +16,7 @@ import com.ems.ui.transport.TransportListWindow;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,9 +26,11 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-public class MainWindow extends Stage implements EventHandler<ActionEvent>{
+public class MainWindow extends Stage implements EventHandler<ActionEvent>, Refreshable{
 	
 	private Stage primaryStage;
 	private MenuItem personnelMenuItem;
@@ -60,6 +63,7 @@ public class MainWindow extends Stage implements EventHandler<ActionEvent>{
 	}
 	
 	private void loadEvents() {
+		pendingEvents.getChildren().removeAll(pendingEvents.getChildren());
 		EventDao dao = new EventDao();
 		try {
 			List<DataObject> eventList = dao.getAllRecords();
@@ -71,14 +75,28 @@ public class MainWindow extends Stage implements EventHandler<ActionEvent>{
 		}
 	}
 	
-	private void addPendingEvent(Event event){
+	private void addPendingEvent(final Event event){
 		HBox hbox = new HBox();
 		VBox vbox = new VBox();
-		Label eventName = new Label(event.getName());
-		vbox.getChildren().addAll(eventName, new Label("From: " + event.getStartDateTime().toString()), new Label("To: " + event.getEndDateTime().toString()));
+		Label eventName = new Label(event.getName() + " : " + event.getLocation());
+		eventName.setFont(Font.font("Arial", FontWeight.BOLD, 13));
+		String startDate = Event.dateFormat.format(event.getStartDateTime().getTime());
+		String endDate = Event.dateFormat.format(event.getEndDateTime().getTime());
+		vbox.getChildren().addAll(eventName, new Label("From: " + startDate), new Label("To: " + endDate));
 		hbox.getChildren().add(vbox);
-		hbox.getChildren().add(new Button("Edit"));
+		
+		Button editButton = new Button("Edit");
+		hbox.getChildren().add(editButton);
+		HBox.setMargin(editButton, new Insets(15));
 		pendingEvents.getChildren().add(hbox);
+		pendingEvents.setMargin(hbox, new Insets(10));
+		
+		editButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				new EventWindow(event.getId(), MainWindow.this);
+			}
+		});
 	}
 
 	private void initMenuItems(MenuBar menuBar){
@@ -116,7 +134,12 @@ public class MainWindow extends Stage implements EventHandler<ActionEvent>{
 		}else if(event.getSource() == studentMenuItem){
 			new StudentListWindow();
 		}else if(event.getSource() == createEventMenu){
-			new EventWindow(0);
+			new EventWindow(0, this);
 		}
+	}
+
+	@Override
+	public void refresh() {
+		loadEvents();
 	}
 }

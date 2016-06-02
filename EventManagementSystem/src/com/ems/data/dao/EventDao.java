@@ -68,15 +68,13 @@ public class EventDao extends AbstractDao {
 		List<Personnel> managerList = getListFromJSONArray(new PersonnelDao(), obj.getJSONArray(KEY_MANAGERS));
 		List<Resource> resourceList = getListFromJSONArray(new ResourceDao(), obj.getJSONArray(KEY_RESOURCES));
 		List<Student> studentList = getListFromJSONArray(new StudentDao(), obj.getJSONArray(KEY_STUDENTS));
-		List<Transport> transportList = getListFromJSONArray(new TransportDao(), obj.getJSONArray(KEY_TRANSPORTS));
-		
-		//List<Expense> managerList = getListFromJSONArray(new PersonnelDao(), obj.getJSONArray(KEY_MANAGERS));
 		
 		Event event = null;
 		if(type.equals(EventWindow.ON_CAMPUS)){
-			event =  new OnCampusEvent(id, name, description, start, end, location, fund);
+			event =  new OnCampusEvent(id, name, description, start, end, type, fund);
 		}else{
-			OffCampusEvent tempEvent = new OffCampusEvent(id, name, location, description, start, end, location, fund);
+			List<Transport> transportList = getListFromJSONArray(new TransportDao(), obj.getJSONArray(KEY_TRANSPORTS));
+			OffCampusEvent tempEvent = new OffCampusEvent(id, name, location, description, start, end, type, fund);
 			tempEvent.setTransportList(transportList);
 			event = tempEvent;
 		}

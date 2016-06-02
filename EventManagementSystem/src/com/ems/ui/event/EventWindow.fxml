@@ -61,7 +61,7 @@
             <Label text="MM/dd/yyyy HH:mm" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Label text="MM/dd/yyyy HH:mm" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <Button id="editExpenseButton" mnemonicParsing="false" text="Edit" GridPane.columnIndex="2" GridPane.rowIndex="10" />
-            <Button id="saveButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Button" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
+            <Button id="saveButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Save" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

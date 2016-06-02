@@ -15,8 +15,11 @@ import com.ems.baseclasses.Personnel;
 import com.ems.baseclasses.Resource;
 import com.ems.baseclasses.Student;
 import com.ems.baseclasses.Transport;
+import com.ems.data.dao.DataReadException;
+import com.ems.data.dao.EventDao;
 import com.ems.ui.AddActionWindow;
 import com.ems.ui.DialogUtil;
+import com.ems.ui.Refreshable;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -60,8 +63,8 @@ public class EventWindow extends AddActionWindow implements EventHandler<ActionE
 	private Button editTransportButton;
 	private Button editExpenseButton;
 	
-	public EventWindow(int id){
-		super(id, null);
+	public EventWindow(int id, Refreshable refreshable){
+		super(id, refreshable);
 		try {
 			root = FXMLLoader.load(getClass().getResource("EventWindow.fxml"));
 			setScene(new Scene(root));
@@ -124,6 +127,32 @@ public class EventWindow extends AddActionWindow implements EventHandler<ActionE
 		initAddAction();
 	}
 
+	private void populateData(){
+		try {EventDao dao = new EventDao();
+			Event event = (Event) dao.getRecordById(entityId);
+			
+			nameField.setText(event.getName());
+			descField.setText(event.getDescription());
+			String start = Event.dateFormat.format(event.getStartDateTime().getTime());
+			startField.setText(start);
+			String end = Event.dateFormat.format(event.getEndDateTime().getTime());
+			endField.setText(end);
+			typeField.getSelectionModel().select(event.getType());
+			locationField.setText(event.getLocation());
+			fundField.setText(event.getFund() + "");
+			personnelListView.setItems(getObservableListFromList(event.getManagerList()));
+			resourceListView.setItems(getObservableListFromList(event.getResourceList()));
+			studentListView.setItems(getObservableListFromList(event.getStudentList()));
+			expenseListView.setItems(getObservableListFromList(event.getExpenseList()));
+			if(event instanceof OffCampusEvent){
+				OffCampusEvent oEvent = (OffCampusEvent) event;
+				transportListView.setItems(getObservableListFromList(oEvent.getTransportList()));
+			}
+		} catch (DataReadException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void showOffCampus(){
 		locationField.setVisible(true);
 		transportListView.setVisible(true);
@@ -168,10 +197,6 @@ public class EventWindow extends AddActionWindow implements EventHandler<ActionE
 				finalListView.setItems(oList);
 			}
 		});
-	}
-
-	private void populateData(){
-		//TODO
 	}
 	
 	@Override
@@ -227,5 +252,12 @@ public class EventWindow extends AddActionWindow implements EventHandler<ActionE
 			returnList.add(data);
 		}
 		return returnList;
+	}
+	
+	private static <T> ObservableList<T> getObservableListFromList(List<T> list){
+		if(list == null){
+			return FXCollections.observableArrayList();
+		}
+		return (ObservableList<T>) FXCollections.observableArrayList(list.toArray());
 	}
 }
