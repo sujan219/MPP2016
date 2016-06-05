@@ -146,7 +146,7 @@ public class MainWindow extends Stage implements EventHandler<ActionEvent>, Refr
 		reportButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				new ReportWindow(event);
+//				new ReportWindow(event);
 			}
 		});
 	}
